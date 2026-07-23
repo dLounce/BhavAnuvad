@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bhav"
+version = "0.1.0"
+description = "BhavAnuvad — expressive Hindi<->Tamil speech-to-speech translation"
+requires-python = ">=3.10,<3.12"
+dependencies = [
+    "torch>=2.2",
+    "torchaudio>=2.2",
+    "numpy>=1.24,<2.0",
+    "soundfile>=0.12",
+    "librosa>=0.10",
+    "pyloudnorm>=0.1.1",
+    "omegaconf>=2.3",
+    "transformers>=4.44",
+    "datasets>=2.20",
+    "sentence-transformers>=3.0",
+    "silero-vad>=5.1",
+    "torchcrepe>=0.0.23",
+    "pyworld>=0.3.4",
+    "indic-nlp-library>=0.92",
+    "pandas>=2.0",
+    "tqdm>=4.66",
+    "wandb>=0.17",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6", "black>=24.0", "pre-commit>=3.7"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
