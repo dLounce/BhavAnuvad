@@ -8,8 +8,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-
-import librosa
+import soxr
 import numpy as np
 import pyloudnorm as pyln
 import soundfile as sf
@@ -44,7 +43,7 @@ def load_audio(
         raise FileNotFoundError(path)
 
     wav, sr = sf.read(path, dtype="float32", always_2d=True)
-    wav = wav.T  # (channels, samples)
+    wav = wav.T 
 
     if mono and wav.shape[0] > 1:
         wav = wav.mean(axis=0, keepdims=True)
@@ -53,7 +52,7 @@ def load_audio(
     if sr != expected_sr:
         if not resample:
             raise AudioSpecError(f"{path.name}: sr={sr}, expected {expected_sr}")
-        wav = librosa.resample(wav, orig_sr=sr, target_sr=expected_sr, res_type="soxr_hq")
+        wav = soxr.resample(wav, sr, expected_sr, quality="HQ")
         sr = expected_sr
 
     if normalize_loudness:
@@ -91,7 +90,7 @@ def save_audio(
 
 def normalize_lufs(wav: np.ndarray, sr: int, target: float = TARGET_LUFS) -> np.ndarray:
     """Loudness-normalize to `target` LUFS. Silent or too-short clips pass through."""
-    if wav.size < int(0.4 * sr):  # pyloudnorm needs >=400 ms
+    if wav.size < int(0.4 * sr):  
         return wav
     meter = pyln.Meter(sr)
     loudness = meter.integrated_loudness(wav)
