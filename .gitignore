@@ -1,0 +1,38 @@
+# data & artifacts
+data/*
+!data/manifests/
+!data/LICENSES.md
+checkpoints/
+outputs/
+wandb/
+*.ckpt
+*.pt
+*.safetensors
+
+# audio (except test fixtures)
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.mkv
+*.mp4
+!tests/fixtures/*.wav
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# tooling
+.pytest_cache/
+.ruff_cache/
+.coverage
+.env
+.DS_Store
+.vscode/
+.idea/
