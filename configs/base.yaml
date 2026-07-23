@@ -1,0 +1,36 @@
+project: bhavanuvad
+seed: 1337
+
+paths:
+  data: data
+  manifests: data/manifests
+  checkpoints: checkpoints
+  outputs: outputs
+
+audio:
+  sr_asr: 16000
+  sr_tts: 24000
+  sr_demucs: 44100
+  target_lufs: -23.0
+
+langs:
+  source: [hi, ta]
+  target: [hi, ta]
+
+models:
+  asr: ai4bharat/indic-conformer-600m-multilingual
+  asr_fallback: openai/whisper-large-v3
+  lid: speechbrain/lang-id-voxlingua107-ecapa
+  mt: ai4bharat/indictrans2-indic-indic-1B
+  tts: ai4bharat/IndicF5
+  tts_fallback: ai4bharat/indic-parler-tts
+  emotion: iic/emotion2vec_plus_large
+  speaker: speechbrain/spkrec-ecapa-voxceleb
+  semantic: sentence-transformers/LaBSE
+
+device: cuda
+dtype: float16
+
+wandb:
+  project: bhavanuvad
+  mode: online
