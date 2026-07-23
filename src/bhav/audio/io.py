@@ -8,10 +8,11 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-import soxr
+
 import numpy as np
 import pyloudnorm as pyln
 import soundfile as sf
+import soxr
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +44,7 @@ def load_audio(
         raise FileNotFoundError(path)
 
     wav, sr = sf.read(path, dtype="float32", always_2d=True)
-    wav = wav.T 
+    wav = wav.T
 
     if mono and wav.shape[0] > 1:
         wav = wav.mean(axis=0, keepdims=True)
@@ -90,7 +91,7 @@ def save_audio(
 
 def normalize_lufs(wav: np.ndarray, sr: int, target: float = TARGET_LUFS) -> np.ndarray:
     """Loudness-normalize to `target` LUFS. Silent or too-short clips pass through."""
-    if wav.size < int(0.4 * sr):  
+    if wav.size < int(0.4 * sr):
         return wav
     meter = pyln.Meter(sr)
     loudness = meter.integrated_loudness(wav)
